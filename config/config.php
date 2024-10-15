@@ -1,21 +1,24 @@
 <?php 
-    // host
-    define("HOST", "localhost");
+    try {
+        // host
+        define("host", "localhost");
 
-    // database name
-    define("DBNAME", "coffee-blend");
+        // database name
+        define("dbname", "coffee-blend");
 
-    // user
-    define("USER", "root");
+        // port
+        define("port", "3377");
 
-    // pass
-    define("PASS", "");
+        // user
+        define("user", "root");
 
-    // The way that we create object in PHP
-    $conn = new PDO("mysql:host=".HOST.";dbname=".DBNAME.";", USER, PASS);
+        // pass
+        define("password", "");
 
-    if ($conn == true) {
-        echo "Connected";
-    } else {
-        echo "Error";
+        // The way that we create object in PHP
+        $conn = new PDO("mysql:host=".host.";port=".port.";dbname=".dbname."", user, password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    } catch(PDOException $Exception ) {
+        echo $Exception->getMessage();
     }
