@@ -23,6 +23,11 @@
         ":password" => $password,
       ]);
 
+      $_SESSION['username'] = $username;
+      $_SESSION['email'] = $email;
+      // TODO
+      // $_SESSION['user_id'] = $fetchUser['id'];
+
       header("location: login.php");
     };
   };

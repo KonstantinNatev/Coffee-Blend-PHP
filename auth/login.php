@@ -22,7 +22,7 @@
         if(password_verify($password, $fetchUser['password'])) {
           $_SESSION['username'] = $fetchUser['username'];
           $_SESSION['email'] = $fetchUser['email'];
-          $_SESSION['id'] = $fetchUser['id'];
+          $_SESSION['user_id'] = $fetchUser['id'];
 
           header("location: ".APPURL."");
         } else {
