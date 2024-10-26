@@ -1,8 +1,43 @@
 <?php require "../includes/header.php" ?>
+<?php require "../config/config.php"; ?>
+<?php 
+
+  if(isset($_SESSION["username"])) {
+    header("location: ".APPURL."");
+  }
+
+ if(isset($_POST["submit"])) {
+    if(empty($_POST["email"] OR empty($_POST["password"]))) {
+      echo "<script>alert('one or more inputs are empty')</script>";
+    } else {
+      $email = $_POST["email"];
+      $password = $_POST["password"];
+
+      $login = $conn->query("SELECT * FROM user WHERE email='$email'");
+      $login->execute();
+
+      $fetchUser = $login->fetch(PDO::FETCH_ASSOC);
+
+      if($login->rowCount() > 0) {
+        if(password_verify($password, $fetchUser['password'])) {
+          $_SESSION['username'] = $fetchUser['username'];
+          $_SESSION['email'] = $fetchUser['email'];
+          $_SESSION['id'] = $fetchUser['id'];
+
+          header("location: ".APPURL."");
+        } else {
+          echo "<script>alert('email or password is wrong')</script>";
+        }
+      } else {
+        echo "<script>alert('email or password is wrong')</script>";
+      }
+    }
+  }
+?>
 
     <section class="home-slider owl-carousel">
 
-      <div class="slider-item" style="background-image: url(<?php APPURL;?>images/bg_1.jpg);" data-stellar-background-ratio="0.5">
+      <div class="slider-item" style="background-image: url(<?php echo APPURL;?>/images/bg_1.jpg);" data-stellar-background-ratio="0.5">
       	<div class="overlay"></div>
         <div class="container">
           <div class="row slider-text justify-content-center align-items-center">
@@ -27,21 +62,21 @@
 	          		<div class="col-md-12">
 	                <div class="form-group">
 	                	<label for="Email">Email</label>
-	                  <input type="text" class="form-control" placeholder="Email">
+	                  <input name="email" type="text" class="form-control" placeholder="Email">
 	                </div>
 	              </div>
                  
 	              <div class="col-md-12">
 	                <div class="form-group">
 	                	<label for="Password">Password</label>
-	                    <input type="password" class="form-control" placeholder="Password">
+	                    <input name="password" type="password" class="form-control" placeholder="Password">
 	                </div>
 
                 </div>
                 <div class="col-md-12">
                 	<div class="form-group mt-4">
 							<div class="radio">
-                <button class="btn btn-primary py-3 px-4">Login</button>
+                <button name="submit" type="submit" class="btn btn-primary py-3 px-4">Login</button>
 						  </div>
 					</div>
                 </div>
@@ -54,4 +89,4 @@
       </div>
     </section> <!-- .section -->
 
-<?php require "../includes/footer.php" ?>
+<?php require "../includes/footer.php"; ?>
