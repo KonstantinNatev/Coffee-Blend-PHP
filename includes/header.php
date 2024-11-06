@@ -48,7 +48,7 @@
 	         
 	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
             <?php if(isset($_SESSION['username'])) : ?>
-	          <li class="nav-item cart"><a href="cart.html" class="nav-link"><span class="icon icon-shopping_cart"></span></a>
+	          <li class="nav-item cart"><a href="<?php echo APPURL?>/products/cart.php" class="nav-link"><span class="icon icon-shopping_cart"></span></a>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <?php echo $_SESSION['username']; ?>

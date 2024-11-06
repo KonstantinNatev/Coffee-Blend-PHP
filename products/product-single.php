@@ -4,6 +4,7 @@
 
 	if(isset($_GET["id"])) {
 		$id = $_GET["id"];
+		$user_id = $_SESSION["user_id"];
 
 		// data for single product
 		$product = $conn->query("SELECT * FROM products WHERE id='$id' ");
@@ -24,22 +25,29 @@
 			$price = $_POST['price'];
 			$image = $_POST['image'];
 			$quantity = $_POST['quantity'];
-
-			$user_id = $_SESSION["user_id"];
-
-			$insert_cart = $conn->prepare("INSERT INTO cart(name, image, price, description, user_id, quantity) VALUES (:name, :image, :price, :description, :user_id, :quantity)");
+			$pro_id = $_POST['pro_id'];
+			
+			$insert_cart = $conn->prepare("INSERT INTO cart(name, image, price, description, pro_id ,user_id, quantity) VALUES (:name, :image, :price, :description, :pro_id, :user_id, :quantity)");
 
 			$insert_cart->execute([
 				":name" => $name,
 				":image" => $image,
 				":price" => $price,
 				":description" => $description,
+				":pro_id" => $pro_id,
 				":user_id" => $user_id,
 				":quantity" => $quantity,
 			]);
 		}
-	}
 
+		// validation for cart
+		if(isset($user_id)) {
+			$validateCart = $conn->query(" SELECT * FROM cart WHERE pro_id='$id' AND user_id='$user_id' ");
+			$validateCart->execute();
+
+			$rowCount = $validateCart->rowCount();
+		}
+	}
 ?>
 
 <section class="home-slider owl-carousel">
@@ -68,7 +76,7 @@
 			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
 				<h3><?php echo $singleProduct->name; ?></h3>
 				<p class="price"><span><?php echo $singleProduct->price; ?></span></p>
-				<p><?php echo $singleProduct->description; ?></p> <!-- Corrected this line -->
+				<p><?php echo $singleProduct->description; ?></p>
 				<p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.</p>
 				<div class="row mt-4">
 					<div class="col-md-6">
@@ -101,13 +109,18 @@
 							</div>
 						</div>
 					
-						<input name="name" value="<?php echo $singleProduct->name; ?>" type="text">
-						<input name="image" value="<?php echo $singleProduct->image; ?>" type="text">
-						<input name="description" value="<?php echo $singleProduct->description; ?>" type="text">
-						<input name="price" value="<?php echo $singleProduct->price; ?>" type="text">
-						<p>
-							<button name="submit" type="submit" class="btn btn-primary py-3 px-5">Add to Cart</button>
-						</p>
+						<input name="name" value="<?php echo $singleProduct->name; ?>" type="hidden">
+						<input name="image" value="<?php echo $singleProduct->image; ?>" type="hidden">
+						<input name="description" value="<?php echo $singleProduct->description; ?>" type="hidden">
+						<input name="pro_id" value="<?php echo $singleProduct->id; ?>" type="hidden">
+						<input name="price" value="<?php echo $singleProduct->price; ?>" type="hidden">
+						<?php if($user_id) :?>
+							<?php if($rowCount > 0) : ?>
+								<button name="submit" type="submit" class="btn btn-primary py-3 px-5" disabled>Added to Cart</button>
+							<?php else: ?>
+								<button name="submit" type="submit" class="btn btn-primary py-3 px-5">Add to Cart</button>
+							<?php endif; ?>
+						<?php endif; ?>
 				</form>
 			</div>
 		</div>
