@@ -18,11 +18,10 @@
 
 	$allTotal = $cartTotal->fetch(PDO::FETCH_OBJ);
 
-	if (!isset($_POST["checkout"])) {
+	if (isset($_POST["checkout"])) {
 		$_SESSION["total_price"] = $_POST["total_price"];
 
 		header("location: checkout.php");
-
 	}
 
 ?>
