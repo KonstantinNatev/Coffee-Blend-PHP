@@ -11,6 +11,7 @@
             empty($_POST["phone"]) OR
             empty($_POST["message"])
         )) {
+            echo "here 1";
             echo "<script>alert('one or more inputs are empty')</script>";
         } else {
             $first_name = $_POST["first_name"];
@@ -42,6 +43,8 @@
                 header("location: ".APPURL."");
             } else {
                 header("location: ".APPURL."");
+                echo "here 1";
+
             }
         }
     }
