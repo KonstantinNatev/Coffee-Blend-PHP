@@ -20,8 +20,8 @@
 		<div class="row slider-text justify-content-center align-items-center">
 
 		<div class="col-md-7 col-sm-12 text-center ftco-animate">
-			<h1 class="mb-3 mt-5 bread">Cart</h1>
-			<p class="breadcrumbs"><span class="mr-2"><a href="<?php echo APPURL; ?>/">Home</a></span> <span>Cart</span></p>
+			<h1 class="mb-3 mt-5 bread">Bookings</h1>
+			<p class="breadcrumbs"><span class="mr-2"><a href="<?php echo APPURL; ?>/">Home</a></span> <span>Bookings</span></p>
 		</div>
 
 		</div>
@@ -45,6 +45,7 @@
                                 <th>Phone number</th>
                                 <th>Message</th>
                                 <th>Status</th>
+                                <th>Write Review</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,6 +58,11 @@
                                     <td class="product-remove"><?php echo $booking->phone; ?></td>
                                     <td class="product-remove"><?php echo $booking->message; ?></td>
                                     <td class="product-remove"><?php echo $booking->status; ?></td>
+                                    <?php if($booking->status == "Done") : ?>
+                                        <td class="product-remove">
+                                            <a class="btn btn-primary" href="<?php echo APPURL; ?>/reviews/write-review.php">write review</a>
+                                        </td>
+                                    <?php endif; ?>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

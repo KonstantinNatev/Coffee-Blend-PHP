@@ -2,11 +2,15 @@
 <?php require "./config/config.php"; ?>
 <?php 
 
-	$products = $conn->query("SELECT * FROM products");
+	$products = $conn->query("SELECT * FROM products WHERE type='coffee drink' ");
 	$products->execute();
 
 	$allProducts = $products->fetchAll(PDO::FETCH_OBJ);
 
+	$reviews = $conn->query("SELECT * FROM reviews");
+    $reviews->execute();
+
+    $allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
 ?>
 
     <section class="home-slider owl-carousel">
@@ -347,71 +351,21 @@
 	    </div>
 	    <div class="container-wrap">
 	      <div class="row d-flex no-gutters">
-	        <div class="col-lg align-self-sm-end ftco-animate">
-	          <div class="testimony">
-	             <blockquote>
-	                <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small.&rdquo;</p>
-	              </blockquote>
-	              <div class="author d-flex mt-4">
-	                <div class="image mr-3 align-self-center">
-	                  <img src="images/person_1.jpg" alt="">
-	                </div>
-	                <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
-	              </div>
-	          </div>
-	        </div>
-	        <div class="col-lg align-self-sm-end">
-	          <div class="testimony overlay">
-	             <blockquote>
-	                <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.&rdquo;</p>
-	              </blockquote>
-	              <div class="author d-flex mt-4">
-	                <div class="image mr-3 align-self-center">
-	                  <img src="images/person_2.jpg" alt="">
-	                </div>
-	                <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
-	              </div>
-	          </div>
-	        </div>
-	        <div class="col-lg align-self-sm-end ftco-animate">
-	          <div class="testimony">
-	             <blockquote>
-	                <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small  line of blind text by the name. &rdquo;</p>
-	              </blockquote>
-	              <div class="author d-flex mt-4">
-	                <div class="image mr-3 align-self-center">
-	                  <img src="images/person_3.jpg" alt="">
-	                </div>
-	                <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
-	              </div>
-	          </div>
-	        </div>
-	        <div class="col-lg align-self-sm-end">
-	          <div class="testimony overlay">
-	             <blockquote>
-	                <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however.&rdquo;</p>
-	              </blockquote>
-	              <div class="author d-flex mt-4">
-	                <div class="image mr-3 align-self-center">
-	                  <img src="images/person_2.jpg" alt="">
-	                </div>
-	                <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
-	              </div>
-	          </div>
-	        </div>
-	        <div class="col-lg align-self-sm-end ftco-animate">
-	          <div class="testimony">
-	            <blockquote>
-	              <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small  line of blind text by the name. &rdquo;</p>
-	            </blockquote>
-	            <div class="author d-flex mt-4">
-	              <div class="image mr-3 align-self-center">
-	                <img src="images/person_3.jpg" alt="">
-	              </div>
-	              <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
-	            </div>
-	          </div>
-	        </div>
+		  	<?php foreach($allReviews as $review) : ?>
+				<div class="col-lg align-self-sm-end">
+					<div class="testimony overlay">
+						<blockquote>
+							<p>&ldquo;<?php echo $review->review ?>&rdquo;</p>
+						</blockquote>
+						<div class="author d-flex mt-4">
+							<div class="image mr-3 align-self-center">
+							<img src="images/person_2.jpg" alt="">
+							</div>
+							<div class="name align-self-center"><?php echo $review->username ?></div>
+						</div>
+					</div>
+				</div>
+			<?php endforeach; ?>
 	      </div>
 	    </div>
 	  </section>
