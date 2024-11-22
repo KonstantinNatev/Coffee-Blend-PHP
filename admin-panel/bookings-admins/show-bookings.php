@@ -1,5 +1,14 @@
-<?php require "../layouts/headers.php"; ?>
+<?php require "../layouts/header.php"; ?>
 <?php require "../../config/config.php"; ?>
+<?php 
+  if(!isset($_SESSION["admin_name"])) {
+    header("location: ".ADMURL."/admins/login-admins.php");
+  }
+
+  $bookings = $conn->query("SELECT * FROM bookings");
+	$bookings->execute();
+	$allBookings = $bookings->fetchAll(PDO::FETCH_OBJ);
+?>
           <div class="row">
         <div class="col">
           <div class="card">
@@ -10,54 +19,32 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">first_name</th>
-                    <th scope="col">last_name</th>
-                    <th scope="col">date</th>
-                    <th scope="col">time</th>
-                    <th scope="col">phone</th>
-                    <th scope="col">message</th>
-                    <th scope="col">status</th>
-                    <th scope="col">created_at</th>
-                    <th scope="col">delete</th>
+                    <th scope="col">First name</th>
+                    <th scope="col">Last name</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Message</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Created at</th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>MOhamed</td>
-                    <td>Hassan</td>
-                    <td>04/12/2023 </td>
-                    <td>3:13 PM</td>
-                    <td>01929923</td>
-                    <td>Rapidiously expedite team driven potentialities with interoperable "outside the box" thinking. Professionally formulate cross-platform interna</td>
-                    <td>Pending</td>
-                    <td>2023-04-09 15:13:17</td>
-                     <td><a href="delete-bookings.html" class="btn btn-danger  text-center ">delete</a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>MOhamed</td>
-                    <td>Hassan</td>
-                    <td>04/12/2023 </td>
-                    <td>3:13 PM</td>
-                    <td>01929923</td>
-                    <td>Rapidiously expedite team driven potentialities with interoperable "outside the box" thinking. Professionally formulate cross-platform interna</td>
-                    <td>Pending</td>
-                    <td>2023-04-09 15:13:17</td>
-                     <td><a href="delete-bookings.html" class="btn btn-danger  text-center ">delete</a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>MOhamed</td>
-                    <td>Hassan</td>
-                    <td>04/12/2023 </td>
-                    <td>3:13 PM</td>
-                    <td>01929923</td>
-                    <td>Rapidiously expedite team driven potentialities with interoperable "outside the box" thinking. Professionally formulate cross-platform interna</td>
-                    <td>Pending</td>
-                    <td>2023-04-09 15:13:17</td>
-                     <td><a href="delete-bookings.html" class="btn btn-danger  text-center ">delete</a></td>
-                  </tr>
+                  <?php foreach($allBookings as $booking) : ?>
+                    <tr>
+                      <th scope="row"><?php echo $booking->id?></th>
+                      <td><?php echo $booking->first_name?></td>
+                      <td><?php echo $booking->last_name?></td>
+                      <td><?php echo $booking->date?></td>
+                      <td><?php echo $booking->time?></td>
+                      <td><?php echo $booking->phone?></td>
+                      <td><?php echo $booking->message?></td>
+                      <td><?php echo $booking->status?></td>
+                      <td><?php echo $booking->created_at?></td>
+                      <td><a href="delete-bookings.html" class="btn btn-danger  text-center ">delete</a></td>
+                    </tr>
+                  <?php endforeach; ?>
                 </tbody>
               </table> 
             </div>

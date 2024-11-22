@@ -2,8 +2,8 @@
 <?php require "../../config/config.php"; ?>
 <?php 
 
-  if(isset($_SESSION["username"])) {
-    header("location: ".APPURL."");
+  if(isset($_SESSION["admin_name"])) {
+    header("location: ".ADMURL."");
   }
 
  if(isset($_POST["submit"])) {
@@ -20,13 +20,13 @@
 
       if($login->rowCount() > 0) {
         if(password_verify($password, $fetchUser['password'])) {
-          $_SESSION['username'] = $fetchUser['username'];
+          $_SESSION['admin_name'] = $fetchUser['admin_name'];
           $_SESSION['email'] = $fetchUser['email'];
-          $_SESSION['user_id'] = $fetchUser['id'];
+          $_SESSION['admin_id'] = $fetchUser['id'];
 
           header("location: ".ADMURL."");
         } else {
-          echo "<script>alert('email or passssssword is wrong')</script>";
+          echo "<script>alert('email or password is wrong')</script>";
         }
       } else {
         echo "<script>alert('email or password is wrong')</script>";

@@ -1,5 +1,10 @@
-<?php require "../layouts/headers.php"; ?>
+<?php require "../layouts/header.php"; ?>
 <?php require "../../config/config.php"; ?>
+<?php 
+  if(!isset($_SESSION["admin_name"])) {
+    header("location: ".ADMURL."/admins/login-admins.php");
+  }
+?>
 
        <div class="row">
         <div class="col">

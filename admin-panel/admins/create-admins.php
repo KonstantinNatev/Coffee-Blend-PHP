@@ -1,4 +1,4 @@
-<?php require "../layouts/headers.php"; ?>
+<?php require "../layouts/header.php"; ?>
 <?php require "../../config/config.php"; ?>
 
        <div class="row">

@@ -1,6 +1,14 @@
-<?php require "../layouts/headers.php"; ?>
+<?php require "../layouts/header.php"; ?>
 <?php require "../../config/config.php"; ?>
+<?php 
+  if(!isset($_SESSION["admin_name"])) {
+    header("location: ".ADMURL."/admins/login-admins.php");
+  }
 
+  $products = $conn->query("SELECT * FROM products");
+	$products->execute();
+	$allProducts = $products->fetchAll(PDO::FETCH_OBJ);
+?>
           <div class="row">
         <div class="col">
           <div class="card">
@@ -12,38 +20,22 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">name</th>
-                    <th scope="col">image</th>
-                    <th scope="col">price</th>
-                    <th scope="col">type</th>
-                    <th scope="col">delete</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Type</th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                     <th scope="row">1</th>
-                     <td>Pizza</td>
-                     <td>image</td>
-                     <td>$1300</td>
-                     <td>drink</td>
-                     <td><a href="delete-products.html" class="btn btn-danger  text-center ">delete</a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Pizza</td>
-                    <td>image</td>
-                    <td>$1300</td>
-                    <td>drink</td>
-                     <td><a href="delete-products.html" class="btn btn-danger  text-center ">delete</a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Pizza</td>
-                    <td>image</td>
-                    <td>$1300</td>
-                    <td>drink</td>
-                     <td><a href="delete-products.html" class="btn btn-danger  text-center ">delete</a></td>
-                  </tr>
+                  <?php foreach($allProducts as $product) : ?>
+                    <tr>
+                      <th scope="row"><?php echo $product->id?></th>
+                      <td><?php echo $product->name?></td>
+                      <td>$<?php echo $product->price?></td>
+                      <td><?php echo $product->type?></td>
+                      <td><a href="delete-products.html" class="btn btn-danger  text-center ">delete</a></td>
+                    </tr>
+                  <?php endforeach; ?>
                 </tbody>
               </table> 
             </div>
